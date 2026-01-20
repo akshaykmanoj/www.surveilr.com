@@ -75,8 +75,13 @@ IMAP_USER_NAME=${EG_SURVEILR_COM_IMAP_USER_NAME}
 IMAP_PASS=${EG_SURVEILR_COM_IMAP_PASS}
 IMAP_HOST=${EG_SURVEILR_COM_IMAP_HOST}
 EOF
+        # We use || { tail ... } to print the error only if Deno fails
         deno run -A ./eg.surveilr.com-prepare.ts \
-            rssdPath="$RSSD_DIR/$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
+            rssdPath="$RSSD_DIR/$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1 || {
+                echo "❌ Deno Content Assembler Failed. Log output:"
+                cat "$LOG_DIR/$rssd_name.log"
+                exit 1
+            }
 
     else
         deno run -A ./eg.surveilr.com-prepare.ts \
