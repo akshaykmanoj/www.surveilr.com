@@ -51,41 +51,36 @@ fi
 # ==================================================
 # PREPARE
 # ==================================================
-echo "▶ Running prepare scripts"
-
-mapfile -t PREPARE_PATHS < <(
-  find "$REPO_DIR" -name 'eg.surveilr.com-prepare.ts' -exec dirname {} \;
-)
+mapfile -t PREPARE_PATHS < <(find "$REPO_DIR" -type f -name 'eg.surveilr.com-prepare.ts' -exec dirname {} \;)
 
 for path in "${PREPARE_PATHS[@]}"; do
-  relative="${path#$REPO_DIR/}"
-  rssd="$(echo "$relative" | tr '/' '-').sqlite.db"
-  name="$(basename "$relative")"
+    relative_path="${path#$REPO_DIR/}"
+    rssd_name=$(echo "$relative_path" | sed 's#/#-#g' ).sqlite.db
+    basename_path=$(basename "$relative_path")
 
-  echo "→ Prepare: $relative"
+    echo "→ Prepare: $relative_path"
 
-  cd "$path"
+    cd "$path" || { echo "Failed to enter $path"; continue; }
 
-  if [ "$name" = "content-assembler" ]; then
-    cat > .env <<EOF
+    if [ "$basename_path" == "site-quality-explorer" ]; then
+        deno run -A ./eg.surveilr.com-prepare.ts \
+            resourceName=surveilr.com \
+            rssdPath="$RSSD_DIR/$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
+
+    elif [ "$basename_path" == "content-assembler" ]; then
+        cat > .env <<EOF
 IMAP_FOLDER=$EG_SURVEILR_COM_IMAP_FOLDER
 IMAP_USER_NAME=$EG_SURVEILR_COM_IMAP_USER_NAME
 IMAP_PASS=$EG_SURVEILR_COM_IMAP_PASS
 IMAP_HOST=$EG_SURVEILR_COM_IMAP_HOST
-EOF
-    set -a; source .env; set +a
-  fi
+EOF     
+        deno run -A ./eg.surveilr.com-prepare.ts \
+            rssdPath=/rssd/"$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
 
-  if [ "$name" = "site-quality-explorer" ]; then
-    deno run -A ./eg.surveilr.com-prepare.ts \
-      resourceName=surveilr.com \
-      rssdPath="$RSSD_DIR/$rssd" \
-      > "$LOG_DIR/$rssd.log" 2>&1
-  else
-    deno run -A ./eg.surveilr.com-prepare.ts \
-      rssdPath="$RSSD_DIR/$rssd" \
-      > "$LOG_DIR/$rssd.log" 2>&1
-  fi
+    else
+        deno run -A ./eg.surveilr.com-prepare.ts \
+            rssdPath=/rssd/"$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
+    fi
 done
 
 # ==================================================
