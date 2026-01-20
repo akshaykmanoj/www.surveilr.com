@@ -11,9 +11,9 @@ jobs:
 
     env:
       EG_SURVEILR_COM_IMAP_FOLDER: INBOX
-      EG_SURVEILR_COM_IMAP_USER_NAME: ${{ secrets.EG_SURVEILR_COM_IMAP_USER_NAME }}
-      EG_SURVEILR_COM_IMAP_PASS: ${{ secrets.EG_SURVEILR_COM_IMAP_PASS }}
-      EG_SURVEILR_COM_IMAP_HOST: ${{ secrets.EG_SURVEILR_COM_IMAP_HOST }}
+      EG_SURVEILR_COM_IMAP_USER_NAME: ${{ secrets.IMAP_USER }}
+      EG_SURVEILR_COM_IMAP_PASS: ${{ secrets.IMAP_PASS }}
+      EG_SURVEILR_COM_IMAP_HOST: ${{ secrets.IMAP_HOST }}
 
       APP_DIR: ${{ github.workspace }}/app
       RSSD_DIR: ${{ github.workspace }}/rssd
@@ -80,18 +80,18 @@ jobs:
           cd ${{ github.workspace }}
           tar -czvf surveilr-rssd.tar.gz rssd
 
-      # -----------------------------
-      # Copy artifacts to production
-      # -----------------------------
-      - name: Copy build artifacts to the production server
-        run: |
-          scp -P22 -o StrictHostKeyChecking=no surveilr-rssd.tar.gz "${{ secrets.PRODUCTION_DEPLOYMENT_USER }}@${{ secrets.PRODUCTION_DEPLOYMENT_SERVER_IP }}:"
+      # # -----------------------------
+      # # Copy artifacts to production
+      # # -----------------------------
+      # - name: Copy build artifacts to the production server
+      #   run: |
+      #     scp -P22 -o StrictHostKeyChecking=no surveilr-rssd.tar.gz "${{ secrets.PRODUCTION_DEPLOYMENT_USER }}@${{ secrets.PRODUCTION_DEPLOYMENT_SERVER_IP }}:"
 
-      # -----------------------------
-      # Deploy on production server
-      # -----------------------------
-      - name: Deploy to production server
-        run: |
-          ssh -p22 -o StrictHostKeyChecking=no -t ${{ secrets.PRODUCTION_DEPLOYMENT_USER }}@${{ secrets.PRODUCTION_DEPLOYMENT_SERVER_IP }} "bash -i eg-surveilr-truth-yard.sh"
+      # # -----------------------------
+      # # Deploy on production server
+      # # -----------------------------
+      # - name: Deploy to production server
+      #   run: |
+      #     ssh -p22 -o StrictHostKeyChecking=no -t ${{ secrets.PRODUCTION_DEPLOYMENT_USER }}@${{ secrets.PRODUCTION_DEPLOYMENT_SERVER_IP }} "bash -i eg-surveilr-truth-yard.sh"
 
 
