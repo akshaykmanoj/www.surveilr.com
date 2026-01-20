@@ -30,6 +30,7 @@ echo "===== SURVEILR PIPELINE STARTED ====="
 # --------------------------------------------------
 # Prepare directories (CI SAFE)
 # --------------------------------------------------
+rm -rf "$APP_DIR" "$RSSD_DIR" "$LOG_DIR"
 mkdir -p "$APP_DIR" "$RSSD_DIR" "$LOG_DIR"
 
 # --------------------------------------------------
