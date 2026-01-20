@@ -74,7 +74,7 @@ IMAP_FOLDER=${EG_SURVEILR_COM_IMAP_FOLDER}
 IMAP_USER_NAME=${EG_SURVEILR_COM_IMAP_USER_NAME}
 IMAP_PASS=${EG_SURVEILR_COM_IMAP_PASS}
 IMAP_HOST=${EG_SURVEILR_COM_IMAP_HOST}
-EOF     
+EOF
         deno run -A ./eg.surveilr.com-prepare.ts \
             rssdPath=/rssd/"$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
 
