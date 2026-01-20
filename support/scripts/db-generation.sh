@@ -76,11 +76,11 @@ IMAP_PASS=${EG_SURVEILR_COM_IMAP_PASS}
 IMAP_HOST=${EG_SURVEILR_COM_IMAP_HOST}
 EOF
         deno run -A ./eg.surveilr.com-prepare.ts \
-            rssdPath=/rssd/"$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
+            rssdPath="$RSSD_DIR/$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
 
     else
         deno run -A ./eg.surveilr.com-prepare.ts \
-            rssdPath=/rssd/"$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
+            rssdPath="$RSSD_DIR/$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
     fi
 done
 
