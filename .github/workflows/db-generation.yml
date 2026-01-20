@@ -54,9 +54,8 @@ jobs:
           sudo mv surveilr /usr/local/bin/surveilr
           sudo chmod +x /usr/local/bin/surveilr
 
-          curl -L -o sqlpkg.zip https://github.com/nalgeon/sqlpkg-cli/releases/download/0.2.2/sqlpkg-linux-amd64.zip
-          unzip sqlpkg.zip
-          sudo mv sqlpkg /usr/local/bin/sqlpkg
+          curl -sSL https://raw.githubusercontent.com/nalgeon/sqlpkg-cli/main/install.sh | bash
+          sudo mv .sqlpkg/sqlpkg /usr/local/bin/sqlpkg
           sudo chmod +x /usr/local/bin/sqlpkg
 
 
