@@ -4,8 +4,8 @@ set -Eeuo pipefail
 # --------------------------------------------------
 # Global paths
 # --------------------------------------------------
-APP_DIR="/app"
-RSSD_DIR="/rssd"
+APP_DIR="${APP_DIR:-/app}"
+RSSD_DIR="${RSSD_DIR:-/rssd}"
 LOG_DIR="$RSSD_DIR/logs"
 REPO_DIR="$APP_DIR/www.surveilr.com"
 
