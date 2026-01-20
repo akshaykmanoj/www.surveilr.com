@@ -61,7 +61,7 @@ for path in "${PREPARE_PATHS[@]}"; do
 
     echo "→ Prepare: $relative_path"
 
-    cd "$path" || { echo "Failed to enter $path"; continue; }
+    cd "$path"
 
     if [ "$basename_path" == "site-quality-explorer" ]; then
         deno run -A ./eg.surveilr.com-prepare.ts \
@@ -70,10 +70,10 @@ for path in "${PREPARE_PATHS[@]}"; do
 
     elif [ "$basename_path" == "content-assembler" ]; then
         cat > .env <<EOF
-IMAP_FOLDER=$EG_SURVEILR_COM_IMAP_FOLDER
-IMAP_USER_NAME=$EG_SURVEILR_COM_IMAP_USER_NAME
-IMAP_PASS=$EG_SURVEILR_COM_IMAP_PASS
-IMAP_HOST=$EG_SURVEILR_COM_IMAP_HOST
+IMAP_FOLDER=${EG_SURVEILR_COM_IMAP_FOLDER}
+IMAP_USER_NAME=${EG_SURVEILR_COM_IMAP_USER_NAME}
+IMAP_PASS=${EG_SURVEILR_COM_IMAP_PASS}
+IMAP_HOST=${EG_SURVEILR_COM_IMAP_HOST}
 EOF     
         deno run -A ./eg.surveilr.com-prepare.ts \
             rssdPath=/rssd/"$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1
