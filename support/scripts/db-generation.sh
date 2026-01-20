@@ -1,5 +1,6 @@
 #!/bin/bash
 set -Eeuo pipefail
+trap 'echo "Error at line $LINENO"; exit 1' ERR
 
 # --------------------------------------------------
 # Global paths
@@ -10,6 +11,14 @@ LOG_DIR="$RSSD_DIR/logs"
 REPO_DIR="$APP_DIR/www.surveilr.com"
 
 echo "===== SURVEILR PIPELINE STARTED ====="
+
+# -------------------------------------------------
+# Required ENV validation
+# -------------------------------------------------
+: "${EG_SURVEILR_COM_IMAP_FOLDER:?Missing IMAP folder}"
+: "${EG_SURVEILR_COM_IMAP_USER_NAME:?Missing IMAP username}"
+: "${EG_SURVEILR_COM_IMAP_PASS:?Missing IMAP password}"
+: "${EG_SURVEILR_COM_IMAP_HOST:?Missing IMAP host}"
 
 # --------------------------------------------------
 # Ensure base directories exist
