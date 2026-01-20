@@ -54,9 +54,11 @@ jobs:
           sudo mv surveilr /usr/local/bin/surveilr
           sudo chmod +x /usr/local/bin/surveilr
 
-          curl -sSL https://raw.githubusercontent.com/nalgeon/sqlpkg-cli/main/install.sh | bash
-          sudo mv .sqlpkg/sqlpkg /usr/local/bin/sqlpkg
-          sudo chmod +x /usr/local/bin/sqlpkg
+      - name: Install SQLite sqlpkg (Required by Deno)
+        run: |
+          curl -sS https://webi.sh/sqlpkg | bash
+          # sudo mv .sqlpkg/sqlpkg /usr/local/bin/sqlpkg
+          # sudo chmod +x /usr/local/bin/sqlpkg
 
 
       # -----------------------------
