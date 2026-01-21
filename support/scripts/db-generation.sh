@@ -1,13 +1,13 @@
 #!/bin/bash
-set -Eeuo pipefail
+#set -Eeuo pipefail
 
-trap '
-echo "❌ ERROR"
-echo "Line    : $LINENO"
-echo "Command : $BASH_COMMAND"
-echo "Path    : $(pwd)"
-exit 1
-' ERR
+# trap '
+# echo "❌ ERROR"
+# echo "Line    : $LINENO"
+# echo "Command : $BASH_COMMAND"
+# echo "Path    : $(pwd)"
+# exit 1
+# ' ERR
 
 # --------------------------------------------------
 # Global paths
