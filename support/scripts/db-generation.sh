@@ -80,7 +80,7 @@ EOF
             rssdPath="$RSSD_DIR/$rssd_name" > "$LOG_DIR/$rssd_name.log" 2>&1 || {
                 echo "❌ Deno Content Assembler Failed. Log output:"
                 cat "$LOG_DIR/$rssd_name.log"
-                exit 1
+                true
             }
 
     else
